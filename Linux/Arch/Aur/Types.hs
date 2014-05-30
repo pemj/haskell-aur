@@ -1,20 +1,20 @@
 module Linux.Arch.Aur where
 
-data PkgInfo = PkgInfo { pkgIdOf          :: Int
-                       , pkgNameOf        :: String
+data AurInfo = AurInfo { aurIdOf          :: Int
+                       , aurNameOf        :: String
                          -- This should be `Version` and parsed nicely.
-                       , pkgVersionOf     :: String
-                       , pkgCategoryOf    :: Int
-                       , pkgDescriptionOf :: String
-                       , pkgUrlOf         :: String
-                       , pkgVotesOf       :: Int
+                       , aurVersionOf     :: String
+                       , aurCategoryOf    :: Int
+                       , aurDescriptionOf :: String
+                       , urlOf            :: String
+                       , aurVotesOf       :: Int
                        , isOutOfDate      :: Bool
-                       , pkgMaintainerOf  :: String
+                       , aurMaintainerOf  :: String
                        , submissionDatOf  :: String  -- String?
                        , modifiedDateOf   :: String
-                       , pkgTarballUrlOf  :: String
-                       , pkgDependsOf     :: [String]
-                       , pkgMakeDepsOf    :: [String]
-                       , pkgOptDepsOf     :: [String]
-                       , pkgConflictsOf   :: [String]
-                       , pkgProvidesOf    :: [String] } deriving (Eq,Show)
+                       , aurTarballUrlOf  :: String
+                       , dependsOf        :: [String]
+                       , makeDepsOf       :: [String]
+                       , optDepsOf        :: [String]
+                       , conflictsOf      :: [String]
+                       , providesOf       :: [String] } deriving (Eq,Show)
