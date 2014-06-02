@@ -1,20 +1,24 @@
-module Linux.Arch.Aur where
+module Linux.Arch.Aur.Types where
+
+import Data.Text
+
+---
 
 data AurInfo = AurInfo { aurIdOf          :: Int
-                       , aurNameOf        :: String
+                       , aurNameOf        :: Text
                          -- This should be `Version` and parsed nicely.
-                       , aurVersionOf     :: String
+                       , aurVersionOf     :: Text
                        , aurCategoryOf    :: Int
-                       , aurDescriptionOf :: String
-                       , urlOf            :: String
+                       , aurDescriptionOf :: Text
+                       , urlOf            :: Text
                        , aurVotesOf       :: Int
                        , isOutOfDate      :: Bool
-                       , aurMaintainerOf  :: String
-                       , submissionDatOf  :: String  -- String?
-                       , modifiedDateOf   :: String
-                       , aurTarballUrlOf  :: String
-                       , dependsOf        :: [String]
-                       , makeDepsOf       :: [String]
-                       , optDepsOf        :: [String]
-                       , conflictsOf      :: [String]
-                       , providesOf       :: [String] } deriving (Eq,Show)
+                       , aurMaintainerOf  :: Text
+                       , submissionDatOf  :: Text  -- Text?
+                       , modifiedDateOf   :: Text
+                       , aurTarballUrlOf  :: Text
+                       , dependsOf        :: [Text]
+                       , makeDepsOf       :: [Text]
+                       , optDepsOf        :: [Text]
+                       , conflictsOf      :: [Text]
+                       , providesOf       :: [Text] } deriving (Eq,Show)
