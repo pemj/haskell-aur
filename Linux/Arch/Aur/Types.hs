@@ -1,5 +1,8 @@
 module Linux.Arch.Aur.Types where
 
+import Control.Applicative
+import Control.Monad (mzero)
+import Data.Aeson
 import Data.Text
 
 ---
@@ -22,3 +25,7 @@ data AurInfo = AurInfo { aurIdOf          :: Int
                        , optDepsOf        :: [Text]
                        , conflictsOf      :: [Text]
                        , providesOf       :: [Text] } deriving (Eq,Show)
+
+instance FromJSON AurInfo where
+    parseJSON (Object v) = undefined  --AurInfo <$>
+    parseJSON _          = mzero

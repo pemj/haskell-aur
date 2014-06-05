@@ -1,5 +1,4 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE LambdaCase #-}
 
 module Linux.Arch.Aur
        ( -- * QUERIES
@@ -28,8 +27,8 @@ import Data.Text
 import Data.Text.Lazy.Encoding
 import Network.Wreq
 
-import qualified Data.Vector as V
 import qualified Data.Text.Lazy as TL
+import qualified Data.Vector as V
 
 ---
 
