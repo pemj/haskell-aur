@@ -8,7 +8,10 @@ module Linux.Arch.Aur
        , multiinfo
        , msearch
        -- * As JSON
+       , search'
+       , info'
        , multiinfo'
+       , msearch'
        -- * Pretty JSON
        , pretty) where
 
@@ -30,44 +33,54 @@ import qualified Data.Text.Lazy as TL
 
 ---
 
-rpcUrl :: String -> String
-rpcUrl method = "https://aur.archlinux.org/rpc.php?"
-                ++ apiVersion
-                ++ "&type=" ++ method ++ "&"
+rpcUrl :: String
+rpcUrl = "https://aur.archlinux.org/rpc.php?"
 
-apiVersion = "v=2"
+apiVersion :: Text
+apiVersion = "2"
 
 -- | Yields any matches to the input as `AurInfo`, but
 -- doesn't include dependency information.
 search :: Text -> IO [AurInfo]
 search = undefined
 
+-- | `search` call as Haskellised JSON.
+search' :: Text -> IO (Maybe Value)
+search' query = rpc "search" [query] "arg"
+
 -- | Returns all information about one package.
 info :: Text -> IO (Maybe AurInfo)
 info = undefined
 --info pkg = listToMaybe <$> multiinfo [pkg]
 
--- | `info` call as Haskellized JSON.
+-- | `info` call as Haskellised JSON.
 info' :: Text -> IO (Maybe Value)
 info' pkg = (>>= (^? nth 0)) <$> multiinfo' [pkg]
 
 -- | Like `info`, but can handle requests for multiple packages at once.
 -- More efficient than using `info` multiple times.
---multiinfo :: [Text] -> IO [AurInfo]
-multiinfo = multiinfo'
+multiinfo :: [Text] -> IO [AurInfo]
+multiinfo = undefined
 
--- | `multiinfo` call as Haskellized JSON.
+-- | `multiinfo` call as Haskellised JSON.
 multiinfo' :: [Text] -> IO (Maybe Value)
-multiinfo' pkgs = fetch pkgs "multiinfo" "arg[]"
+multiinfo' pkgs = rpc "multiinfo" pkgs "arg[]"
 
 -- | Search the AUR by Maintainer name.
 msearch :: Text -> IO [AurInfo]
 msearch = undefined
 
+-- | `msearch` call as Haskellised JSON.
+msearch' :: Text -> IO (Maybe Value)
+msearch' maintainer = rpc "msearch" [maintainer] "arg"
+
 -- | Call the RPC.
-fetch :: [Text] -> String -> Text -> IO (Maybe Value)
-fetch pkgs method argLabel = rpcResults <$> getWith opts (rpcUrl method)
-    where opts = defaults & param argLabel .~ pkgs
+-- Doesn't fail elegantly when there is a connection failure.
+rpc :: Text -> [Text] -> Text -> IO (Maybe Value)
+rpc method args argLabel = rpcResults <$> getWith opts rpcUrl
+    where opts = defaults & param "type"   .~ [method]
+                          & param argLabel .~ args
+                          & param "v"      .~ [apiVersion]
 
 rpcResults :: AsValue r => Response r -> Maybe Value
 rpcResults r = r ^? responseBody . key "results"
