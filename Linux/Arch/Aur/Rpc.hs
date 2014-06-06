@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Linux.Arch.Aur
+module Linux.Arch.Aur.Rpc
        ( -- * QUERIES
          search
        , info
