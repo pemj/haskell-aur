@@ -17,6 +17,7 @@ module Linux.Arch.Aur.Rpc
 import Linux.Arch.Aur.Types
 
 import Control.Applicative  ((<$>))
+import Control.Monad.Trans  (MonadIO, liftIO)
 import Control.Lens
 import Data.Aeson           (Value(..), fromJSON, Result(..))
 import Data.Aeson.Lens      (AsValue, _String, key, nth)
@@ -40,42 +41,42 @@ apiVersion = "2"
 
 -- | Yields any matches to the input as `AurInfo`, but
 -- doesn't include dependency information.
-search :: Text -> IO [AurInfo]
+search :: MonadIO m => Text -> m [AurInfo]
 search = undefined
 
 -- | `search` call as Haskellised JSON.
-search' :: Text -> IO (Maybe Value)
+search' :: MonadIO m => Text -> m (Maybe Value)
 search' query = rpc "search" [query] "arg"
 
 -- | Returns all information about one package.
-info :: Text -> IO (Maybe AurInfo)
+info :: (MonadIO m, Functor m) => Text -> m (Maybe AurInfo)
 info p = (>>= extract) <$> info' p
 
 -- | `info` call as Haskellised JSON.
-info' :: Text -> IO (Maybe Value)
+info' :: (MonadIO m, Functor m) => Text -> m (Maybe Value)
 info' pkg = (>>= (^? nth 0)) <$> multiinfo' [pkg]
 
 -- | Like `info`, but can handle requests for multiple packages at once.
 -- More efficient than using `info` multiple times.
-multiinfo :: [Text] -> IO [AurInfo]
+multiinfo :: MonadIO m => [Text] -> m [AurInfo]
 multiinfo = undefined
 
 -- | `multiinfo` call as Haskellised JSON.
-multiinfo' :: [Text] -> IO (Maybe Value)
+multiinfo' :: MonadIO m => [Text] -> m (Maybe Value)
 multiinfo' pkgs = rpc "multiinfo" pkgs "arg[]"
 
 -- | Search the AUR by Maintainer name.
-msearch :: Text -> IO [AurInfo]
+msearch :: MonadIO m => Text -> m [AurInfo]
 msearch = undefined
 
 -- | `msearch` call as Haskellised JSON.
-msearch' :: Text -> IO (Maybe Value)
+msearch' :: MonadIO m => Text -> m (Maybe Value)
 msearch' maintainer = rpc "msearch" [maintainer] "arg"
 
 -- | Call the RPC.
 -- Doesn't fail elegantly when there is a connection failure.
-rpc :: Text -> [Text] -> Text -> IO (Maybe Value)
-rpc method args argLabel = rpcResults <$> getWith opts rpcUrl
+rpc :: MonadIO m => Text -> [Text] -> Text -> m (Maybe Value)
+rpc method args argLabel = liftIO (rpcResults <$> getWith opts rpcUrl)
     where opts = defaults & param "type"   .~ [method]
                           & param argLabel .~ args
                           & param "v"      .~ [apiVersion]
