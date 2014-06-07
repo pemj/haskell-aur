@@ -88,5 +88,5 @@ rpcResults r = r ^? responseBody . key "results"
 pretty :: Value -> Text
 pretty = TL.toStrict . decodeUtf8 . encodePretty
 
---test :: Text -> IO (Result AurInfo)
---test p = (fromJSON . fromJust) <$> info' p
+test :: Text -> IO (Result AurInfo)
+test p = (fromJSON . fromJust) <$> info' p
