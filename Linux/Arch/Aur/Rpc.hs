@@ -18,7 +18,7 @@ import Linux.Arch.Aur.Types
 
 import Control.Applicative  ((<$>))
 import Control.Lens
-import Data.Aeson           (Value(..), fromJSON, Result)
+import Data.Aeson           (Value(..), fromJSON, Result(..))
 import Data.Aeson.Lens      (AsValue, _String, key, nth)
 import Data.Aeson.Encode.Pretty
 import Data.Map.Lazy
@@ -49,8 +49,7 @@ search' query = rpc "search" [query] "arg"
 
 -- | Returns all information about one package.
 info :: Text -> IO (Maybe AurInfo)
-info = undefined
---info pkg = listToMaybe <$> multiinfo [pkg]
+info p = (>>= extract) <$> info' p
 
 -- | `info` call as Haskellised JSON.
 info' :: Text -> IO (Maybe Value)
@@ -88,5 +87,7 @@ rpcResults r = r ^? responseBody . key "results"
 pretty :: Value -> Text
 pretty = TL.toStrict . decodeUtf8 . encodePretty
 
-test :: Text -> IO (Result AurInfo)
-test p = (fromJSON . fromJust) <$> info' p
+extract :: Value -> Maybe AurInfo
+extract = f . fromJSON
+    where f (Success x) = Just x
+          f _           = Nothing

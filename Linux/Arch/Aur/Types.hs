@@ -18,7 +18,7 @@ data AurInfo = AurInfo { aurIdOf          :: Int
                        , licenseOf        :: [Text]
                        , urlOf            :: Text
                        , aurVotesOf       :: Int
-                       , isOutOfDate      :: Int
+                       , isOutOfDate      :: Bool
                        , aurMaintainerOf  :: Text
                        , submissionDatOf  :: Int
                        , modifiedDateOf   :: Int
@@ -41,7 +41,7 @@ instance FromJSON AurInfo where
                            v .:  "License"            <*>
                            v .:  "URL"                <*>
                            v .:  "NumVotes"           <*>
-                           v .:  "OutOfDate"          <*>
+                           (f <$> (v .:  "OutOfDate")) <*>
                            v .:  "Maintainer"         <*>
                            v .:  "FirstSubmitted"     <*>
                            v .:  "LastModified"       <*>
@@ -51,4 +51,6 @@ instance FromJSON AurInfo where
                            v .:? "OptDepends"  .!= [] <*>
                            v .:? "Conflicts"   .!= [] <*>
                            v .:? "Provides"    .!= []
+                               where f :: Int -> Bool
+                                     f = (/= 0)
     parseJSON _          = mzero
