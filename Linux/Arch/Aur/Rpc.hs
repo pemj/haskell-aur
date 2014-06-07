@@ -18,11 +18,11 @@ import Linux.Arch.Aur.Types
 
 import Control.Applicative  ((<$>))
 import Control.Lens
-import Data.Aeson           (Value(..))
+import Data.Aeson           (Value(..), fromJSON, Result)
 import Data.Aeson.Lens      (AsValue, _String, key, nth)
 import Data.Aeson.Encode.Pretty
 import Data.Map.Lazy
-import Data.Maybe           (listToMaybe)
+import Data.Maybe           (listToMaybe, fromJust)
 import Data.Text
 import Data.Text.Lazy.Encoding
 import Network.Wreq
@@ -87,3 +87,6 @@ rpcResults r = r ^? responseBody . key "results"
 -- | Conversion of JSON to nicely formated text.
 pretty :: Value -> Text
 pretty = TL.toStrict . decodeUtf8 . encodePretty
+
+--test :: Text -> IO (Result AurInfo)
+--test p = (fromJSON . fromJust) <$> info' p
