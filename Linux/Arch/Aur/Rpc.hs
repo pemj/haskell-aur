@@ -20,15 +20,13 @@ import Control.Applicative  ((<$>))
 import Control.Monad.Trans  (MonadIO, liftIO)
 import Control.Lens
 import Data.Aeson           (Value(..), FromJSON, Result(..), fromJSON)
-import Data.Aeson.Lens      (AsValue, _String, key, nth)
+import Data.Aeson.Lens      (AsValue, key, nth)
 import Data.Aeson.Encode.Pretty
-import Data.Map.Lazy
-import Data.Maybe           (catMaybes, listToMaybe, maybeToList, fromJust)
+import Data.Maybe           (catMaybes)
 import Data.Text
 import Data.Text.Lazy.Encoding
 import Network.Wreq
 
-import qualified Data.List      as L
 import qualified Data.Text.Lazy as TL
 import qualified Data.Vector    as V
 
@@ -85,17 +83,17 @@ rpc method args argLabel = liftIO (rpcResults <$> getWith opts rpcUrl)
 rpcResults :: AsValue r => Response r -> Maybe Value
 rpcResults r = r ^? responseBody . key "results"
 
--- | Conversion of JSON to nicely formated text.
+-- | Conversion of JSON to nicely formatted text.
 pretty :: Value -> Text
 pretty = TL.toStrict . decodeUtf8 . encodePretty
 
+--------------------
+-- UTILITY FUNCTIONS
+--------------------
 extract :: FromJSON a => Value -> Maybe a
 extract = f . fromJSON
     where f (Success x) = Just x
           f _           = Nothing
-
-maybeToList' :: Maybe [a] -> [a]
-maybeToList' = L.concat . maybeToList
 
 -- There must be a better way to do this.
 mapArray :: FromJSON a => Maybe Value -> [a]
