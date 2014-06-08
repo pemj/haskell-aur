@@ -38,7 +38,7 @@ instance FromJSON AurInfo where
                            v .:  "Version"            <*>
                            v .:  "CategoryID"         <*>
                            v .:  "Description"        <*>
-                           v .:  "License"            <*>
+                           v .:? "License"     .!= [] <*>
                            v .:  "URL"                <*>
                            v .:  "NumVotes"           <*>
                            (f <$> (v .:  "OutOfDate")) <*>
