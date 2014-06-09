@@ -2,14 +2,14 @@
 
 module Linux.Arch.Aur.Rpc
        ( -- * Queries
-         search
-       , info
+         info
        , multiinfo
+       , search
        , msearch
        -- * As JSON
-       , search'
        , info'
        , multiinfo'
+       , search'
        , msearch'
        -- * Pretty JSON
        , pretty) where
@@ -38,15 +38,6 @@ rpcUrl = "https://aur.archlinux.org/rpc.php?"
 apiVersion :: Text
 apiVersion = "2"
 
--- | Yields any matches to the input as `AurInfo`, but
--- doesn't include dependency information.
-search :: (MonadIO m, Functor m) => Text -> m [AurInfo]
-search s = mapArray <$> search' s
-
--- | `search` call as Haskellised JSON.
-search' :: MonadIO m => Text -> m (Maybe Value)
-search' query = rpc "search" [query] "arg"
-
 -- | Returns all information about one package.
 info :: (MonadIO m, Functor m) => Text -> m (Maybe AurInfo)
 info p = (>>= extract) <$> info' p
@@ -63,6 +54,15 @@ multiinfo p = mapArray <$> multiinfo' p
 -- | `multiinfo` call as Haskellised JSON.
 multiinfo' :: MonadIO m => [Text] -> m (Maybe Value)
 multiinfo' pkgs = rpc "multiinfo" pkgs "arg[]"
+
+-- | Yields any matches to the input as `AurInfo`, but
+-- doesn't include dependency information.
+search :: (MonadIO m, Functor m) => Text -> m [AurInfo]
+search s = mapArray <$> search' s
+
+-- | `search` call as Haskellised JSON.
+search' :: MonadIO m => Text -> m (Maybe Value)
+search' query = rpc "search" [query] "arg"
 
 -- | Search the AUR by Maintainer name.
 msearch :: (MonadIO m, Functor m) => Text -> m [AurInfo]
@@ -83,7 +83,7 @@ rpc method args argLabel = liftIO (rpcResults <$> getWith opts rpcUrl)
 rpcResults :: AsValue r => Response r -> Maybe Value
 rpcResults r = r ^? responseBody . key "results"
 
--- | Conversion of JSON to nicely formatted text.
+-- | Conversion of JSON to nicely formatted Text.
 pretty :: Value -> Text
 pretty = TL.toStrict . decodeUtf8 . encodePretty
 

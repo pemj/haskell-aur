@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Linux.Arch.Aur.Types
     ( AurInfo(..) ) where
 
