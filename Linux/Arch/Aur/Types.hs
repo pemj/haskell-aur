@@ -1,5 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
 
+-- |
+-- Module    : Linux.Arch.Aur.Types
+-- Copyright : (c) Colin Woodbury, 2014
+-- License   : GPL3
+-- Maintainer: Colin Woodbury <colingw@gmail.com>
+
 module Linux.Arch.Aur.Types
     ( AurInfo(..) ) where
 
