@@ -8,18 +8,6 @@ version:             0.0.1
 
 synopsis:            Access metadata from the Arch Linux User Repository.
 
-description:         Access package information from Arch Linux's AUR via its
-                     RPC interface. The main exposed functions reflect
-                     those of the RPC:
-                     - info:      Get metadata for one package.
-                     - multiinfo: Get metadata for many packages at once.
-                     - search:    Get limited metadata for packages that
-                                  match a given regex.
-                     - msearch:   Get metadata for all packages maintained
-                                  by a given user.
-                     By default this library supports version 2 of the RPC,
-                     and hence version 3.x of the AUR.
-
 homepage:            https://github.com/fosskers/haskell-aur
 
 license:             GPL-3
@@ -34,12 +22,29 @@ category:            Linux
 
 build-type:          Simple
 
--- Extra files to be distributed with the package, such as examples or a 
--- README.
--- extra-source-files:  
-
 -- Constraint on the version of Cabal needed to build this package.
 cabal-version:       >=1.10
+
+description:         Access package information from Arch Linux's AUR via its
+                     RPC interface. The main exposed functions reflect
+                     those of the RPC:
+                     .
+                     * info:      Get metadata for one package.
+                     .
+                     * multiinfo: Get metadata for many packages at once.
+                     .
+                     * search:    Get limited metadata for packages that
+                                  match a given regex.
+                     .
+                     * msearch:   Get metadata for all packages maintained
+                                  by a given user.
+                     .
+                     By default this library supports version 2 of the RPC,
+                     and hence version 3.x of the AUR.
+
+-- Extra files to be distributed with the package, such as examples or a
+-- README.
+-- extra-source-files:
 
 library
   exposed-modules:     Linux.Arch.Aur.Rpc, Linux.Arch.Aur.Types
