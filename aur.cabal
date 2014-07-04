@@ -4,7 +4,7 @@
 -- The name of the package.
 name:                aur
 
-version:             0.1.0
+version:             0.2.0
 
 synopsis:            Access metadata from the Arch Linux User Repository.
 
@@ -39,8 +39,8 @@ description:         Access package information from Arch Linux's AUR via its
                      * msearch:   Get metadata for all packages maintained
                                   by a given user.
                      .
-                     By default this library supports version 2 of the RPC,
-                     and hence version 3.x of the AUR.
+                     By default this library supports version 3 of the RPC,
+                     and hence version 3.2+ of the AUR.
 
 -- Extra files to be distributed with the package, such as examples or a
 -- README.

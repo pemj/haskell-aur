@@ -42,7 +42,7 @@ rpcUrl :: String
 rpcUrl = "https://aur.archlinux.org/rpc.php?"
 
 apiVersion :: Text
-apiVersion = "2"
+apiVersion = "3"
 
 -- | Returns all information about one package.
 info :: (MonadIO m, Functor m) => Text -> m (Maybe AurInfo)
