@@ -4,7 +4,7 @@
 -- The name of the package.
 name:                aur
 
-version:             1.0.0
+version:             1.1.0
 
 synopsis:            Access metadata from the Arch Linux User Repository.
 
@@ -47,7 +47,8 @@ description:         Access package information from Arch Linux's AUR via its
 -- extra-source-files:
 
 library
-  exposed-modules:     Linux.Arch.Aur.Pkgbuild,
+  exposed-modules:     Linux.Arch.Aur,
+                       Linux.Arch.Aur.Pkgbuild,
                        Linux.Arch.Aur.Rpc,
                        Linux.Arch.Aur.Types
   
@@ -70,4 +71,3 @@ library
   -- hs-source-dirs:      
   
   default-language:    Haskell2010
-  
