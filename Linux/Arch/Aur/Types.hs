@@ -27,7 +27,7 @@ data AurInfo = AurInfo { aurIdOf          :: Int
                        , urlOf            :: Text
                        , aurVotesOf       :: Int
                        , isOutOfDate      :: Bool
-                       , aurMaintainerOf  :: Text
+                       , aurMaintainerOf  :: Maybe Text
                        , submissionDatOf  :: Int
                        , modifiedDateOf   :: Int
                        , aurTarballUrlOf  :: Text
@@ -50,7 +50,7 @@ instance FromJSON AurInfo where
                            v .:  "URL"                <*>
                            v .:  "NumVotes"           <*>
                            (f <$> (v .:  "OutOfDate")) <*>
-                           v .:  "Maintainer"         <*>
+                           v .:? "Maintainer"         <*>
                            v .:  "FirstSubmitted"     <*>
                            v .:  "LastModified"       <*>
                            v .:  "URLPath"            <*>

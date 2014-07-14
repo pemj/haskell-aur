@@ -1,5 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE ViewPatterns #-}
 
 -- |
 -- Module    : Linux.Arch.Aur.Pkgbuild
@@ -9,6 +10,7 @@
 
 module Linux.Arch.Aur.Pkgbuild
     ( pkgbuild
+    , pkgbuild'
     , pkgbuildUrl ) where
 
 import Control.Applicative ((<$>))
@@ -41,3 +43,7 @@ pkgbuild p = e $ (rb >=> txt) <$> get (pkgbuildUrl p)
     where rb  = (^? responseBody)
           txt = Just . TL.toStrict . decodeUtf8
           e f = liftIO $ f `catch` (\(_ :: E) -> return Nothing)
+
+-- | Callable with Text as well, if that's easier.
+pkgbuild' :: MonadIO m => Text -> m (Maybe Text)
+pkgbuild' (unpack -> p) = pkgbuild p
