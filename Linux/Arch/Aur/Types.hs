@@ -2,7 +2,7 @@
 
 -- |
 -- Module    : Linux.Arch.Aur.Types
--- Copyright : (c) Colin Woodbury, 2014
+-- Copyright : (c) Colin Woodbury, 2014,2015
 -- License   : GPL3
 -- Maintainer: Colin Woodbury <colingw@gmail.com>
 

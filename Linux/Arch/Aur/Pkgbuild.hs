@@ -4,7 +4,7 @@
 
 -- |
 -- Module    : Linux.Arch.Aur.Pkgbuild
--- Copyright : (c) Colin Woodbury, 2014
+-- Copyright : (c) Colin Woodbury, 2014,2015
 -- License   : GPL3
 -- Maintainer: Colin Woodbury <colingw@gmail.com>
 
@@ -13,18 +13,17 @@ module Linux.Arch.Aur.Pkgbuild
     , pkgbuild'
     , pkgbuildUrl ) where
 
-import Control.Applicative ((<$>))
-import Control.Lens        ((^?))
-import Control.Monad       ((>=>))
-import Control.Monad.Trans (MonadIO, liftIO)
-import Data.Monoid         ((<>))
-import Data.Text    hiding (take)
-import Data.Text.Lazy.Encoding
-import Network.Wreq
-import System.FilePath     ((</>))
-
-import Control.Exception (SomeException, catch)
+import           Control.Applicative ((<$>))
+import           Control.Exception (SomeException, catch)
+import           Control.Lens ((^?))
+import           Control.Monad ((>=>))
+import           Control.Monad.Trans (MonadIO, liftIO)
+import           Data.Monoid ((<>))
+import           Data.Text hiding (take)
 import qualified Data.Text.Lazy as TL
+import           Data.Text.Lazy.Encoding
+import           Network.Wreq
+import           System.FilePath ((</>))
 
 ---
 

@@ -2,7 +2,7 @@
 
 -- |
 -- Module    : Linux.Arch.Aur.Rpc
--- Copyright : (c) Colin Woodbury, 2014
+-- Copyright : (c) Colin Woodbury, 2014,2015
 -- License   : GPL3
 -- Maintainer: Colin Woodbury <colingw@gmail.com>
 
@@ -20,21 +20,20 @@ module Linux.Arch.Aur.Rpc
        -- * Pretty JSON
        , pretty) where
 
-import Linux.Arch.Aur.Types
+import           Linux.Arch.Aur.Types
 
-import Control.Applicative  ((<$>))
-import Control.Monad.Trans  (MonadIO, liftIO)
-import Control.Lens
-import Data.Aeson           (Value(..), FromJSON, Result(..), fromJSON)
-import Data.Aeson.Lens      (AsValue, key, nth)
-import Data.Aeson.Encode.Pretty
-import Data.Maybe           (catMaybes)
-import Data.Text
-import Data.Text.Lazy.Encoding
-import Network.Wreq
-
+import           Control.Applicative ((<$>))
+import           Control.Lens
+import           Control.Monad.Trans (MonadIO, liftIO)
+import           Data.Aeson (Value(..), FromJSON, Result(..), fromJSON)
+import           Data.Aeson.Encode.Pretty
+import           Data.Aeson.Lens (AsValue, key, nth)
+import           Data.Maybe (catMaybes)
+import           Data.Text
 import qualified Data.Text.Lazy as TL
-import qualified Data.Vector    as V
+import           Data.Text.Lazy.Encoding
+import qualified Data.Vector as V
+import           Network.Wreq
 
 ---
 
