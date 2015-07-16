@@ -13,12 +13,10 @@ module Linux.Arch.Aur.Pkgbuild
     , pkgbuild'
     , pkgbuildUrl ) where
 
-import           Control.Applicative ((<$>))
 import           Control.Exception (SomeException, catch)
 import           Control.Lens ((^?))
 import           Control.Monad ((>=>))
 import           Control.Monad.Trans (MonadIO, liftIO)
-import           Data.Monoid ((<>))
 import           Data.Text hiding (take)
 import qualified Data.Text.Lazy as TL
 import           Data.Text.Lazy.Encoding
@@ -30,11 +28,11 @@ import           System.FilePath ((</>))
 type E = SomeException
 
 baseUrl :: String
-baseUrl = "https://aur.archlinux.org/packages/"
+baseUrl = "https://aur4.archlinux.org/"
 
 -- | The location of a given package's PKGBUILD on the AUR servers.
 pkgbuildUrl :: String -> String
-pkgbuildUrl p = baseUrl </> take 2 p </> p </> "PKGBUILD"
+pkgbuildUrl p = baseUrl </> "cgit/aur.git/plain/PKGBUILD?h=" ++ p
 
 -- | The PKGBUILD of a given package, retrieved from the AUR servers.
 pkgbuild :: MonadIO m => String -> m (Maybe Text)

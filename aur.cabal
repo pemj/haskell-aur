@@ -4,7 +4,7 @@
 -- The name of the package.
 name:                aur
 
-version:             2.0.4
+version:             3.0.0
 
 synopsis:            Access metadata from the Arch Linux User Repository.
 
@@ -61,7 +61,7 @@ library
   
   other-extensions:    OverloadedStrings, ScopedTypeVariables
   
-  build-depends:       base >=4.7 && <4.9,
+  build-depends:       base >=4.8 && <4.9,
                        aeson >=0.7 && <1,
                        aeson-pretty >=0.7 && <1,
                        filepath,

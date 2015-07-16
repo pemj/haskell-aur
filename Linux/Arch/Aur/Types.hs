@@ -9,7 +9,6 @@
 module Linux.Arch.Aur.Types
     ( AurInfo(..) ) where
 
-import Control.Applicative
 import Control.Monad (mzero)
 import Data.Aeson
 import Data.Text
@@ -21,16 +20,16 @@ data AurInfo = AurInfo { aurIdOf          :: Int
                        , pkgBaseIdOf      :: Int
                        , pkgBaseOf        :: Text
                        , aurVersionOf     :: Text
-                       , aurCategoryOf    :: Int
                        , aurDescriptionOf :: Text
                        , licenseOf        :: [Text]
                        , urlOf            :: Text
                        , aurVotesOf       :: Int
+                       , popularityOf     :: Float
                        , isOutOfDate      :: Bool
                        , aurMaintainerOf  :: Maybe Text
                        , submissionDatOf  :: Int
                        , modifiedDateOf   :: Int
-                       , aurTarballUrlOf  :: Text
+                       , urlPathOf        :: Text
                        , dependsOf        :: [Text]
                        , makeDepsOf       :: [Text]
                        , optDepsOf        :: [Text]
@@ -44,12 +43,12 @@ instance FromJSON AurInfo where
                            v .:  "PackageBaseID"      <*>
                            v .:  "PackageBase"        <*>
                            v .:  "Version"            <*>
-                           v .:  "CategoryID"         <*>
                            v .:  "Description"        <*>
                            v .:? "License"     .!= [] <*>
                            v .:  "URL"                <*>
                            v .:  "NumVotes"           <*>
-                           (f <$> (v .:  "OutOfDate")) <*>
+                           v .:  "Popularity"         <*>
+                           (f <$> (v .: "OutOfDate")) <*>
                            v .:? "Maintainer"         <*>
                            v .:  "FirstSubmitted"     <*>
                            v .:  "LastModified"       <*>
