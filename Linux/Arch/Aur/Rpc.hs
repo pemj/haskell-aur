@@ -2,7 +2,7 @@
 
 -- |
 -- Module    : Linux.Arch.Aur.Rpc
--- Copyright : (c) Colin Woodbury, 2014,2015
+-- Copyright : (c) Colin Woodbury, 2014, 2015
 -- License   : GPL3
 -- Maintainer: Colin Woodbury <colingw@gmail.com>
 
@@ -28,7 +28,7 @@ module Linux.Arch.Aur.Rpc
        , searchJ'
        , msearchJ'
        -- * Pretty JSON
-       , pretty) where
+       , pretty ) where
 
 import           Linux.Arch.Aur.Types
 
@@ -48,9 +48,6 @@ import           Network.Wreq
 
 aurUrl :: String
 aurUrl = "https://aur.archlinux.org/rpc.php?"
-
-aur4Url :: String
-aur4Url = "https://aur4.archlinux.org/rpc.php?"
 
 -- | Returns all information about one package.
 info :: MonadIO m => Text -> m (Maybe AurInfo)
@@ -76,15 +73,15 @@ infoJ p = (>>= (^? nth 0)) <$> multiinfoJ [p]
 
 -- | `multiinfo` call as Haskellised JSON.
 multiinfoJ :: MonadIO m => [Text] -> m (Maybe Value)
-multiinfoJ ps = multiinfoJ' ps aur4Url "4"
+multiinfoJ ps = multiinfoJ' ps aurUrl "4"
 
 -- | `search` call as Haskellised JSON.
 searchJ :: MonadIO m => Text -> m (Maybe Value)
-searchJ s = searchJ' s aur4Url "4"
+searchJ s = searchJ' s aurUrl "4"
 
 -- | `msearch` call as Haskellised JSON.
 msearchJ :: MonadIO m => Text -> m (Maybe Value)
-msearchJ m = msearchJ' m aur4Url "4"
+msearchJ m = msearchJ' m aurUrl "4"
 
 -- | `info` with explicit RPC endpoint and API version.
 info' :: MonadIO m => Text -> String -> Text -> m (Maybe AurInfo)

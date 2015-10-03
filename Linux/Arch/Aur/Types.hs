@@ -2,7 +2,7 @@
 
 -- |
 -- Module    : Linux.Arch.Aur.Types
--- Copyright : (c) Colin Woodbury, 2014,2015
+-- Copyright : (c) Colin Woodbury, 2014, 2015
 -- License   : GPL3
 -- Maintainer: Colin Woodbury <colingw@gmail.com>
 
@@ -25,7 +25,7 @@ data AurInfo = AurInfo { aurIdOf          :: Int
                        , urlOf            :: Text
                        , aurVotesOf       :: Int
                        , popularityOf     :: Float
-                       , isOutOfDate      :: Bool
+                       , dateObsoleteOf   :: Maybe Int
                        , aurMaintainerOf  :: Maybe Text
                        , submissionDatOf  :: Int
                        , modifiedDateOf   :: Int
@@ -48,7 +48,7 @@ instance FromJSON AurInfo where
                            v .:  "URL"                <*>
                            v .:  "NumVotes"           <*>
                            v .:  "Popularity"         <*>
-                           (f <$> (v .: "OutOfDate")) <*>
+                           v .:? "OutOfDate"          <*>
                            v .:? "Maintainer"         <*>
                            v .:  "FirstSubmitted"     <*>
                            v .:  "LastModified"       <*>
